@@ -45,6 +45,13 @@ const pizzaData = [
     photoName: 'pizzas/prosciutto.jpg',
     soldOut: false,
   },
+  {
+    name: 'Pizza Prosciutto Mozzarella',
+    ingredients: 'Tomato, mozarella, ham, aragula, and burrata cheese',
+    price: 18,
+    photoName: 'pizzas/prosciutto.jpg',
+    soldOut: false,
+  },
 ];
 
 function App() {
@@ -55,10 +62,6 @@ function App() {
       <Footer />
     </div>
   );
-}
-
-function HeaderMenu2() {
-  return null;
 }
 
 function Header() {
