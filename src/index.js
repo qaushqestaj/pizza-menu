@@ -57,7 +57,7 @@ function App() {
   );
 }
 
-function HeaderMenu() {
+function HeaderMenu2() {
   return null;
 }
 
