@@ -8,23 +8,22 @@ on:
 jobs:
   deploy:
     runs-on: ubuntu-latest
-
+    container:
+      image: node:20
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v3
-
-      - name: Deploy to EC2
+      - uses: actions/checkout@v3
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 20
+      - run: npm ci
+      - run: npm run build
+      - name: Get SSH Key and set permissions
         run: |
-          ssh -o StrictHostKeyChecking=no -i ${{ secrets.EC2_KEY }} ${{ secrets.EC2_USER }}@${{ secrets.EC2_HOST }} << 'EOF'
-            # Navigate to your project directory on EC2
-            cd /home/ec2-user/pizza-menu
-
-            # Pull the latest code
-            git pull origin main
-
-            # Install dependencies
-            npm ci
-          EOF
-
-      - name: Clean up
-        run: rm -f ec2_key.pem
+          mkdir -p ~/.ssh
+          echo "${{ secrets.EC2_KEY }}" > ~/.ssh/id_rsa
+          chmod 600 ~/.ssh/id_rsa
+      - name: Deploy using SCP
+        run: scp -o StrictHostKeyChecking=no -i ~/.ssh/id_rsa -r ./dist/* ${{ secrets.EC2_USER }}@${{ secrets.EC2_HOST }}:~/node-app
+      - name: Restart server
+        run: ssh -o StrictHostKeyChecking=no -i ~/.ssh/id_rsa ${{ secrets.EC2_USER }}@${{ secrets.EC2_HOST }} "cd ~/node-app && npm install && pm2 restart 0"
