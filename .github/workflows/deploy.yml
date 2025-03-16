@@ -30,9 +30,5 @@ jobs:
             # Install dependencies
             npm ci
 
-            # Restart the application (adjust this command for your app)
-            pm2 restart app_name || pm2 start app_name
-          EOF
-
       - name: Clean up
         run: rm -f ec2_key.pem
