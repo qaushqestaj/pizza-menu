@@ -46,9 +46,9 @@ const pizzaData = [
     soldOut: false,
   },
   {
-    name: 'Pizza Prosciutto Mozzarella',
+    name: 'Pizza Test Deployment',
     ingredients: 'Tomato, mozarella, ham, aragula, and burrata cheese',
-    price: 18,
+    price: 100,
     photoName: 'pizzas/prosciutto.jpg',
     soldOut: false,
   },
