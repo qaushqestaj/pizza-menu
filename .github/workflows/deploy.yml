@@ -24,6 +24,6 @@ jobs:
           echo "${{ secrets.EC2_KEY }}" > ~/.ssh/id_ed25519
           chmod 600 ~/.ssh/id_ed25519
       - name: Deploy using SCP
-        run: scp -o StrictHostKeyChecking=no -i ~/.ssh/id_ed25519 -r ./dist/* ${{ secrets.EC2_USER }}@${{ secrets.EC2_HOST }} /home/${{ secrets.EC2_USER }}/pizza-menu
+        run: scp -o StrictHostKeyChecking=no -i ~/.ssh/id_ed25519 -r ./dist/* ${{ secrets.EC2_USER }}@${{ secrets.EC2_HOST }}/home/${{ secrets.EC2_USER }}/pizza-menu
       - name: Restart server
         run: ssh -o StrictHostKeyChecking=no -i ~/.ssh/id_ed25519 ${{ secrets.EC2_USER }}@${{ secrets.EC2_HOST }} "cd /home/${{ secrets.EC2_USER }}/pizza-menu && npm install && pm2 restart 0"
